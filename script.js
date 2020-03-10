@@ -42,7 +42,7 @@ async function showConfirmedData(confirmed, deaths, recovered) {
   let totalDeaths = 0;
   let totalRecoveries = 0;
 
-  let response = await fetch(`http://ipinfo.io?token=30955b6c4d992b`);
+  let response = await fetch(`https://ipinfo.io?token=30955b6c4d992b`);
   let data = await response.json();
   let location = data.country;
   confirmed.locations.forEach(country => {

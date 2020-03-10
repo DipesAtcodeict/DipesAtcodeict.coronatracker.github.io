@@ -14,18 +14,19 @@ const totalRecoveriesForCurrentLocation = document.querySelector(
   '.totalRecoveriesForCurrentLocation'
 );
 
+const loading = document.querySelector('.loading');
+
+const bar = document.querySelectorAll('.bar');
+
+const app = document.querySelector('.app');
+const navbar = document.querySelector('.navbar');
+
 //fetching data from api
 async function getCoronaData() {
   let url = `https://coronavirus-tracker-api.herokuapp.com/all`;
   let response = await fetch(url);
   let data = await response.json();
   return data;
-}
-
-//displaying data in html
-async function displayData() {
-  const { confirmed, deaths, recovered } = await getCoronaData();
-  showConfirmedData(confirmed, deaths, recovered);
 }
 
 //app
@@ -41,7 +42,7 @@ async function showConfirmedData(confirmed, deaths, recovered) {
   let totalDeaths = 0;
   let totalRecoveries = 0;
 
-  let response = await fetch(`https://ipinfo.io?token=30955b6c4d992b`);
+  let response = await fetch(`http://ipinfo.io?token=30955b6c4d992b`);
   let data = await response.json();
   let location = data.country;
   confirmed.locations.forEach(country => {
@@ -65,4 +66,46 @@ async function showConfirmedData(confirmed, deaths, recovered) {
   totalRecoveriesForCurrentLocation.innerHTML = `Total recoveries: <span class="info">${totalRecoveries}</span>`;
 }
 
-displayData();
+//loading animation
+function wait(ms) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function wait() {
+      resolve(ms);
+    }, ms);
+  });
+}
+
+let flag = true;
+
+function scale(ele) {
+  if (flag == true) {
+    ele.style.transform = 'scale(0.5)';
+  } else {
+    ele.style.transform = 'scale(1)';
+  }
+}
+
+async function runLoader(stop) {
+  let i;
+  for (i = 0; i < bar.length; i++) {
+    await wait(50);
+    scale(bar[i]);
+    if (i == bar.length - 1) {
+      i = -1;
+      flag = !flag;
+    }
+  }
+}
+
+window.addEventListener('load', async () => {
+  loading.setAttribute('style', 'display:flex');
+  runLoader();
+  const data = await getCoronaData();
+  if (data) {
+    const { confirmed, deaths, recovered } = data;
+    showConfirmedData(confirmed, deaths, recovered);
+    loading.setAttribute('style', 'display:none');
+    app.setAttribute('style', 'display:flex');
+    navbar.setAttribute('style', 'display:block');
+  }
+});

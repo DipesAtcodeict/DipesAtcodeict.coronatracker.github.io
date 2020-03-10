@@ -1,0 +1,57 @@
+*,
+html {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(39, 33, 31);
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+.navbar {
+  text-align: center;
+  margin-top: 15px;
+  color: rgb(14, 207, 143);
+}
+
+.app {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.confirmed {
+  width: 50%;
+  height: fit-content;
+  background-color: #4b2f2e;
+  text-align: center;
+  display: inline-block;
+}
+
+.stats {
+  text-align: left;
+}
+
+.confirmed div {
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+
+.info {
+  background-color: indigo;
+  padding: 5px 20px;
+  margin-top: 5px;
+  color: white;
+  font-size: 1.8rem;
+  display: inline-block;
+  border-radius: 8px;
+}
+
+@media (max-width: 800px) {
+  .confirmed {
+    width: 100%;
+  }
+}

@@ -19,7 +19,6 @@ async function getCoronaData() {
   let url = `https://coronavirus-tracker-api.herokuapp.com/all`;
   let response = await fetch(url);
   let data = await response.json();
-  console.log(data);
   return data;
 }
 
